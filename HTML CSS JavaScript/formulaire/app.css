@@ -1,0 +1,101 @@
+*,
+::before,
+::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+body {
+  background-image: url(images/background.jpg);
+  background-size: cover;
+  background-position: center;
+  color: white;
+  font-family: sans-serif;
+  font-weight: 520;
+}
+form {
+  width: 400px;
+  height: 450px;
+  margin: 0 auto;
+  margin-top: 100px;
+  border: 2px solid white;
+  border-radius: 20px;
+  background: transparent;
+  backdrop-filter: blur(5px); /* floutage de l'arriere plan*/
+  padding: 40px;
+}
+h2 {
+  text-align: center;
+  font-size: 40px;
+  font-family: Arial, Helvetica, sans-serif;
+  margin-bottom: 3px;
+  margin-top: 50px;
+}
+.field {
+  margin-bottom: 20px;
+  margin-top: 40px;
+  border-bottom: 2px solid white;
+  position: relative;
+  display: flex;
+  justify-content: baseline;
+  input {
+    border: none;
+    outline: none;
+    background: transparent;
+    /* border: 1px solid black; */
+    width: 100%;
+    height: 30px;
+    color: white;
+    font-size: 15px;
+  }
+  /* input:valid + label {
+    top: -5px;
+  } */
+  input:focus + label {
+    top: -15px;
+    font-size: 0.85em;
+    /* transform: translateY(-50%); */
+  }
+
+  label {
+    transform: translateY(-50%);
+    position: absolute;
+    /* transition-property: position; */
+    /* transition: top 0.5s ease-in-out; */
+    /* left: 2px;
+    bottom: 10px; */
+  }
+}
+.rememberMe {
+  /* border: 1px solid black; */
+  display: flex;
+  justify-content: center;
+  margin: 5px;
+  margin-bottom: 10px;
+}
+button {
+  border: none;
+  outline: 0;
+  display: block;
+  width: 100%;
+  height: 40px;
+  padding: 7px;
+  margin: 10px 0;
+  font-size: 20px;
+  font-weight: bold; /*800*/
+  background-color: white;
+  color: black;
+  border-radius: 20px/20px;
+  cursor: pointer;
+  transition-property: background-color;
+  transition-duration: 0.5s;
+}
+button:hover {
+  background-color: rgb(213, 238, 247);
+  border: 2px solid lightblue;
+}
+.endMessage {
+  text-align: center;
+  margin-top: 10px;
+  /* border: 1px solid black; */
+}

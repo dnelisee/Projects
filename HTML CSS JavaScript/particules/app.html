@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Particules</title>
+    <style>
+      *{
+        padding: 0;
+        margin: 0;
+      }
+      #canvas {
+        background-color: #333;
+      }
+    </style>
+  </head>
+  <body>
+    <canvas id="canvas"></canvas>
+    <script type="text/javascript">
+
+      let canvas = document.getElementById("canvas");
+      let ctx = canvas.getContext("2d");
+      const numberOfParticules = 100;  
+      let particulesArray = []; 
+
+      // resize the canvas 
+      canvas.width = window.innerWidth; 
+      canvas.height = window.innerHeight; 
+
+      // class Particule 
+      class Particule {
+        constructor(x, y, radius, color, directionX, directionY) {
+          this.x = x;
+          this.y = y; 
+          this.radius = radius; 
+          this.color = color; 
+          this.directionX = directionX; 
+          this.directionY = directionY; 
+          this.ball = false; // red ball 
+        }
+        draw() {
+          ctx.beginPath(); 
+          ctx.fillStyle = this.color; 
+          ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2); 
+          ctx.fill(); 
+        }
+        move() {
+          if(this.x -this.radius < 0 || this.x + this.radius > canvas.width) {
+            this.directionX = - this.directionX; 
+          }
+          if(this.y -this.radius < 0 || this.y + this.radius > canvas.height) {
+            this.directionY = - this.directionY; 
+          }
+          this.x += this.directionX; 
+          this.y += this.directionY; 
+
+          this.draw(); 
+        }
+      }
+
+      function randomNumber(min, max) {
+        return Math.random() * (max - min) + min; 
+      }
+      function init() {
+        for(let i = 0; i < numberOfParticules; i++) {
+          particulesArray.push(
+            new Particule(
+              randomNumber(5, canvas.width), 
+              randomNumber(5, canvas.height), 
+              randomNumber(1, 20),
+              "white",
+              randomNumber(1, 3), // change to change the speed 
+              randomNumber(1, 3) // change to change the speed 
+              
+            )
+          )
+        }
+      }
+      function play() {
+        // clear the canvas 
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+        // draw and move particules 
+        for(let i = 0; i < particulesArray.length; i++) {
+          particulesArray[i].move();
+        }
+        ball.move();
+
+        // collision 
+        collisionAndDestruction();
+        // console.log(particulesArray);
+
+        // recursion
+        requestAnimationFrame(play);
+      }
+      
+      function collisionAndDestruction() {
+        const r0 = ball.radius;
+
+        for(let i = 0; i < particulesArray.length; i++) {
+          let R2 = (particulesArray[i].x - ball.x) ** 2  + (particulesArray[i].y - ball.y) ** 2;
+          const r = particulesArray[i].radius;
+          
+          if(R2 < (r + r0) ** 2) {
+            particulesArray.splice(i, 1);
+          }
+        }
+      }
+      function resize() {
+        init(); 
+        play();
+      }
+
+      let ball = new Particule(
+              randomNumber(5, canvas.width), 
+              randomNumber(5, canvas.height), 
+              15,
+              "red",
+              randomNumber(1, 3), // change to change the speed 
+              randomNumber(1, 3) // change to change the speed 
+      ); 
+
+      // gerer le redimensonnement de la page du navigateur 
+      // let doIt; 
+      // window.addEventListener('resize', ()=>{
+      //   clearTimeout(doIt); 
+      //   doIt = setTimeout(resize, 100); 
+      //   canvas.width = window.innerWidth; 
+      //   canvas.height = window.innerHeight; 
+      // }, false);
+
+      init(); 
+      play();
+    </script>
+  </body>
+</html>
